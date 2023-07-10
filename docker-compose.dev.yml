@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  database:
+    container_name: pocketbase
+    build:
+      context: ./database
+    ports:
+      - 8080:8080
+    volumes:
+      - pocketbase:/data
+
+  frontend:
+    container_name: sveltekit_app
+    build: 
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 3000:3000
+
+
+volumes:
+  pocketbase:
