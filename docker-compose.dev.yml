@@ -8,6 +8,18 @@ services:
       - 8080:8080
     volumes:
       - pocketbase:/data
+  
+
+  backend:
+    container_name: golang_backend
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+
 
   frontend:
     container_name: sveltekit_app
@@ -16,7 +28,9 @@ services:
       dockerfile: dev.Dockerfile
     ports:
       - 3000:3000
-
+    depends_on:
+      - backend
+      - database
 
 volumes:
   pocketbase:
