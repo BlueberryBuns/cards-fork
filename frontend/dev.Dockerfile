@@ -1,16 +1,23 @@
-FROM node:18-alpine as builder
-WORKDIR /frontend
-COPY package*.json .
-RUN npm ci
-COPY . .
-RUN npm run build
-RUN npm prune --production
-
 FROM node:18-alpine
+
+# Set the Node environment to development to ensure all packages are installed
+ENV NODE_ENV development
+
+# change working directory
 WORKDIR /frontend
-COPY --from=builder /frontend/build build/
-COPY --from=builder /frontend/node_modules node_modules/
-COPY package.json .
+
+# copy all json and lock files
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "yarn.lock", "./"]
+
+# install node modules
+RUN yarn
+
+# Copy over rest of the project files
+COPY . .
+
+# Expose port 3000 for the SvelteKit app and 24678 for Vite's HMR
 EXPOSE 3000
-ENV NODE_ENV=dev
-CMD [ "node", "build" ]
+EXPOSE 24678
+
+# Run `yarn dev` and set the host to 0.0.0.0 so we can access the web app from outside
+CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000"]

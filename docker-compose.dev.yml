@@ -16,7 +16,10 @@ services:
       dockerfile: dev.Dockerfile
     ports:
       - 3000:3000
-
+      - 24678:24678
+    volumes:
+      - ./frontend/:/frontend
+      - /cards-fork/frontend/node_modules
 
 volumes:
   pocketbase:
