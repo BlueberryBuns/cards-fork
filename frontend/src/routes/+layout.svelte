@@ -11,7 +11,7 @@
 	</main>
 
 	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+		<p>Cards game fork of <a href="https://pyx-1.pretendyoure.xyz/zy/game.jsp">pretendyoure.xyz</a></p>
 	</footer>
 </div>
 
