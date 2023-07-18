@@ -1,5 +1,14 @@
 version: "3.8"
 services:
+  backend:
+    container_name: golang_backend
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
   frontend:
     container_name: sveltekit_app
     build: 
@@ -8,6 +17,8 @@ services:
     ports:
       - 3000:3000
       - 24678:24678
+    depends_on:
+      - backend
     volumes:
       - ./frontend/:/frontend
       - /cards-fork/frontend/node_modules
